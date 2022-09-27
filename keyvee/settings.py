@@ -51,7 +51,8 @@ if IS_PLATFORMSH:
     relationships = {}
 
     if "PLATFORM_RELATIONSHIPS" in os.environ:
-        relationships = json.loads(base64.standard_b64decode(os.environ["PLATFORM_RELATIONSHIPS"]))
+        all_relationships = json.loads(base64.standard_b64decode(os.environ["PLATFORM_RELATIONSHIPS"]))
+        relationships = all_relationships["database"][0]
 
     os.environ["POSTGRES_HOST"] = relationships.get("host", "unknown")
     os.environ["POSTGRES_PORT"] = relationships.get("port", "unknown")

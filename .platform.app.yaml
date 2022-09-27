@@ -24,7 +24,7 @@ hooks:
     build: |
       set -e
 
-      pip install poetry
+      pip install --user poetry
       poetry install
       poetry run ./manage.py collectstatic
 

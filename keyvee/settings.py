@@ -14,6 +14,7 @@ import dotenv
 
 dotenv.load_dotenv()
 
+import json
 import os
 from pathlib import Path
 
@@ -42,12 +43,18 @@ ALLOWED_HOSTS = ["*"]
 # done on Platform.sh.
 if IS_PLATFORMSH:
     # https://docs.platform.sh/add-services/postgresql.html#relationship
-    relationships = os.environ["PLATFORM_RELATIONSHIPS"]
-    os.environ["POSTGRES_HOST"] = relationships["host"]
-    os.environ["POSTGRES_PORT"] = relationships["port"]
-    os.environ["POSTGRES_NAME"] = relationships["path"]
-    os.environ["POSTGRES_USER"] = relationships["username"]
-    os.environ["POSTGRES_PASSWORD"] = relationships["password"]
+    # This variable is unavailable during build stage.
+    # FIXME: Instead of this being a completely optional variable, use some
+    # other indicator to check if the current executing context is a build hook
+    # or runtime and make it optional in the former case.
+    relationships = os.environ.get("PLATFORM_RELATIONSHIPS", "{}")
+    relationships = json.loads(relationships)
+
+    os.environ["POSTGRES_HOST"] = relationships.get("host")
+    os.environ["POSTGRES_PORT"] = relationships.get("port")
+    os.environ["POSTGRES_NAME"] = relationships.get("path")
+    os.environ["POSTGRES_USER"] = relationships.get("username")
+    os.environ["POSTGRES_PASSWORD"] = relationships.get("password")
 
 
 # Application definition

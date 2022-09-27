@@ -55,7 +55,7 @@ if IS_PLATFORMSH:
         relationships = all_relationships["database"][0]
 
     os.environ["POSTGRES_HOST"] = relationships.get("host", "unknown")
-    os.environ["POSTGRES_PORT"] = relationships.get("port", "unknown")
+    os.environ["POSTGRES_PORT"] = str(relationships.get("port", "unknown"))
     os.environ["POSTGRES_NAME"] = relationships.get("path", "unknown")
     os.environ["POSTGRES_USER"] = relationships.get("username", "unknown")
     os.environ["POSTGRES_PASSWORD"] = relationships.get("password", "unknown")

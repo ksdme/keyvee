@@ -23,6 +23,8 @@ relationships:
 hooks:
     build: |
       set -e
+
+      pip install poetry
       poetry install
       poetry run ./manage.py collectstatic
 

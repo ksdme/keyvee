@@ -34,6 +34,7 @@ hooks:
       poetry run ./manage.py collectstatic
 
       poetry run which python3
+      echo "Hey"
 
     deploy: |
       set -x

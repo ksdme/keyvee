@@ -30,7 +30,7 @@ hooks:
       # the fs there is read only.
       PIP_USER=0 poetry config virtualenvs.create false
 
-      PIP_USER=0 poetry install --no-root --no-interaction --no-ansi
+      PIP_USER=0 poetry install --no-interaction --no-ansi
       poetry run ./manage.py collectstatic
 
     deploy: |

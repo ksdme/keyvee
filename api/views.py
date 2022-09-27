@@ -11,6 +11,7 @@ class BlobViewSet(viewsets.ModelViewSet):
     authentication_classes = tuple()
     permission_classes = tuple()
 
+    lookup_field = "key"
     queryset = Blob.objects.all()
     serializer_class = BlobSerializer
 

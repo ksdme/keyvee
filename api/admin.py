@@ -4,4 +4,4 @@ from api.models import Blob
 
 @admin.register(Blob)
 class BlobModelAdmin(admin.ModelAdmin):
-  list_display = ("owner", "key", "created", "updated")
+    list_display = ("namespace", "key", "created", "updated")

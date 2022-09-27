@@ -14,8 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.urls import include
 from django.urls import path
 
+
 urlpatterns = [
+    # FIXME: Ugly hack to get the namespaced prefix in the url to work.
+    # This uuid prefix should be moved to the api router.
+    path("<uuid:namespace>/", include("api.urls")),
     path("admin/", admin.site.urls),
 ]

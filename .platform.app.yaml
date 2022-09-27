@@ -24,7 +24,7 @@ hooks:
     build: |
       set -e -x
 
-      pip install --user poetry
+      pip install poetry
 
       # Otherwise, poetry wil create virtualenvs at runtime and fail because
       # the fs there is read only.

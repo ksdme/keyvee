@@ -29,11 +29,10 @@ hooks:
 
       PIP_USER=0 poetry install --no-interaction --no-ansi
       poetry run ./manage.py collectstatic
-      poetry run which python3
 
     deploy: |
       set -x
-      poetry run which python3
+
       poetry run ./manage.py migrate
 
 web:

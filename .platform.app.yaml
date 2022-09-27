@@ -25,6 +25,11 @@ hooks:
       set -e
 
       pip install --user poetry
+
+      # Otherwise, poetry wil create virtualenvs at runtime and fail because
+      # the fs there is read only.
+      poetry config virtualenvs.create false
+
       PIP_USER=0 poetry install --no-root
       poetry run ./manage.py collectstatic
 

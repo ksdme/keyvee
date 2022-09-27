@@ -23,6 +23,9 @@ class BlobViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(namespace=self.namespace)
 
     def get_serializer_context(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return super().get_serializer_context()
+
         return {
             **super().get_serializer_context(),
             "namespace": self.namespace,

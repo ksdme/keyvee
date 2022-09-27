@@ -16,11 +16,33 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include
 from django.urls import path
+from django.urls import re_path
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
+
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="KeyVee API",
+      default_version='v1',
+      description=(
+        "KeyVee is a namespaced key value store. This API does not require "
+        "any authentication. All data and operations you generate and consume "
+        "will happen under a namespace. Therefore, to use this API you have to "
+        "generate a random UUID4 namespace for yourself."
+      ),
+   ),
+   public=True,
+   authentication_classes=[],
+   permission_classes=[permissions.AllowAny],
+)
 
 
 urlpatterns = [
     # FIXME: Ugly hack to get the namespaced prefix in the url to work.
     # This uuid prefix should be moved to the api router.
+    path("", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("<uuid:namespace>/", include("api.urls")),
     path("admin/", admin.site.urls),
 ]

@@ -4,7 +4,7 @@ from api.models import Blob
 
 class BlobSerializer(serializers.ModelSerializer):
     class Meta:
-        meta = Blob
+        model = Blob
         fields = "__all__"
         read_only_fields = ("namespace",)
 

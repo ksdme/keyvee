@@ -23,19 +23,19 @@ from rest_framework import permissions
 
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="KeyVee API",
-      default_version='v1',
-      description=(
-        "KeyVee is a namespaced key value store. This API does not require "
-        "any authentication. All data and operations you generate and consume "
-        "will happen under a namespace. Therefore, to use this API you have to "
-        "generate a random UUID4 namespace for yourself."
-      ),
-   ),
-   public=True,
-   authentication_classes=[],
-   permission_classes=[permissions.AllowAny],
+    openapi.Info(
+        title="KeyVee API",
+        default_version="v1",
+        description=(
+            "KeyVee is a namespaced key value store. This API does not require "
+            "any authentication. All data and operations you generate and consume "
+            "will happen under a namespace. Therefore, to use this API you have to "
+            "generate a random UUID4 namespace for yourself."
+        ),
+    ),
+    public=True,
+    authentication_classes=[],
+    permission_classes=[permissions.AllowAny],
 )
 
 

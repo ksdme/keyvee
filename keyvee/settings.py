@@ -14,6 +14,7 @@ import dotenv
 
 dotenv.load_dotenv()
 
+import base64
 import json
 import os
 from pathlib import Path
@@ -47,7 +48,11 @@ if IS_PLATFORMSH:
     # FIXME: Instead of this being a completely optional variable, use some
     # other indicator to check if the current executing context is a build hook
     # or runtime and make it optional in the former case.
-    relationships = json.loads(os.environ.get("PLATFORM_RELATIONSHIPS", "{}"))
+    relationships = {}
+
+    if "PLATFORM_RELATIONSHIPS" in os.environ:
+        relationships = json.loads(base64.standard_b64decode(os.environ["PLATFORM_RELATIONSHIPS"]))
+
     os.environ["POSTGRES_HOST"] = relationships.get("host", "unknown")
     os.environ["POSTGRES_PORT"] = relationships.get("port", "unknown")
     os.environ["POSTGRES_NAME"] = relationships.get("path", "unknown")

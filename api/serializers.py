@@ -5,7 +5,7 @@ from api.models import Blob
 class BlobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Blob
-        fields = "__all__"
+        exclude = ("id", "namespace")
         read_only_fields = ("namespace",)
 
     def save(self, **kwargs):

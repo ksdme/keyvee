@@ -10,6 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import dotenv
+dotenv.load_dotenv()
+
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,10 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-jk6q$j8bzh#o)jh973ctfkb_j$-(c7+ng*cis0p#tp*1d4mhi2"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Environment of the application.
+IS_DEVELOPMENT = os.environ.get("ENV", "development") == "development"
 
-ALLOWED_HOSTS = []
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = IS_DEVELOPMENT
+
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -76,12 +83,24 @@ WSGI_APPLICATION = "keyvee.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if IS_DEVELOPMENT:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": os.environ.get("POSTGRES_HOST"),
+            "PORT": os.environ.get("POSTGRES_PORT"),
+            "NAME": os.environ.get("POSTGRES_NAME"),
+            "USER": os.environ.get("POSTGRES_USER"),
+            "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        }
+    }
 
 
 # Password validation

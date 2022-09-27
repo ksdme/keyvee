@@ -25,7 +25,7 @@ hooks:
       set -e
 
       pip install --user poetry
-      poetry install
+      PIP_USER=0 poetry install
       poetry run ./manage.py collectstatic
 
     deploy: |

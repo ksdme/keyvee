@@ -47,14 +47,12 @@ if IS_PLATFORMSH:
     # FIXME: Instead of this being a completely optional variable, use some
     # other indicator to check if the current executing context is a build hook
     # or runtime and make it optional in the former case.
-    relationships = os.environ.get("PLATFORM_RELATIONSHIPS", "{}")
-    relationships = json.loads(relationships)
-
-    os.environ["POSTGRES_HOST"] = relationships.get("host")
-    os.environ["POSTGRES_PORT"] = relationships.get("port")
-    os.environ["POSTGRES_NAME"] = relationships.get("path")
-    os.environ["POSTGRES_USER"] = relationships.get("username")
-    os.environ["POSTGRES_PASSWORD"] = relationships.get("password")
+    relationships = json.loads(os.environ.get("PLATFORM_RELATIONSHIPS", "{}"))
+    os.environ["POSTGRES_HOST"] = relationships.get("host", "unknown")
+    os.environ["POSTGRES_PORT"] = relationships.get("port", "unknown")
+    os.environ["POSTGRES_NAME"] = relationships.get("path", "unknown")
+    os.environ["POSTGRES_USER"] = relationships.get("username", "unknown")
+    os.environ["POSTGRES_PASSWORD"] = relationships.get("password", "unknown")
 
 
 # Application definition

@@ -25,6 +25,8 @@ hooks:
       set -e -x
 
       pip install poetry
+      poetry config virtualenvs.path $PYTHONUSERBASE/.virtualenvs --local
+
       poetry install --no-interaction --no-ansi
       poetry run ./manage.py collectstatic
       poetry run which python3

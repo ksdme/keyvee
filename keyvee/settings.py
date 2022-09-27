@@ -30,10 +30,24 @@ SECRET_KEY = "django-insecure-jk6q$j8bzh#o)jh973ctfkb_j$-(c7+ng*cis0p#tp*1d4mhi2
 # Environment of the application.
 IS_DEVELOPMENT = os.environ.get("ENV", "development") == "development"
 
+IS_PLATFORMSH = os.environ.get("ENV") == "production-platformsh"
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = IS_DEVELOPMENT
 
 ALLOWED_HOSTS = ["*"]
+
+
+# Load up specific environment variables in case the deployment is being
+# done on Platform.sh.
+if IS_PLATFORMSH:
+    # https://docs.platform.sh/add-services/postgresql.html#relationship
+    relationships = os.environ["PLATFORM_RELATIONSHIPS"]
+    os.environ["POSTGRES_HOST"] = relationships["host"]
+    os.environ["POSTGRES_PORT"] = relationships["port"]
+    os.environ["POSTGRES_NAME"] = relationships["path"]
+    os.environ["POSTGRES_USER"] = relationships["username"]
+    os.environ["POSTGRES_PASSWORD"] = relationships["password"]
 
 
 # Application definition
